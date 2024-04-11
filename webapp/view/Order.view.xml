@@ -1,0 +1,70 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:layout="sap.ui.layout" controllerName="de.cas.omfactivities.controller.Order" displayBlock="true">
+    <SearchField xmlns="sap.m" placeholder="Search for ..." id="field0" value="{orderView>/orderId}" search=".onSubmitOrderId"/>
+    <f:DynamicPage id="page">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>otitle} {orderView&gt;/orderId}"/>
+                </f:heading>
+                <!--
+                    <f:expandedContent>
+					<Title id="title" text="Orders:"/>
+                    <Button xmlns="sap.m" id="inputButton" text="{i18n>showbutton}" press=".onSubmitOrderId"/>
+                    <Input xmlns="sap.m" id="orderNrInput" value="{orderView>/orderId}" submit=".onSubmitOrderId"/>
+				</f:expandedContent>
+                -->
+                <f:actions>
+                    
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="dpHeader" pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+							<ObjectAttribute title="{i18n>customer}" text="{orderView>/Order/customer/person/name}"/>
+							<ObjectAttribute title="{i18n>status}" text="{orderView>/Order/status}"/>
+						</layout:VerticalLayout>
+
+						<layout:VerticalLayout>
+							<ObjectAttribute title="{i18n>createdAt}" text="{orderView>/Order/metadata/createdAt}"/>
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="table0" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="title" header="Smart Table">
+                <headerToolbar>
+						<Toolbar>
+							<Title text="{i18n>activities}" level="H2"/>
+						</Toolbar>
+					</headerToolbar>
+                <columns>
+                    <Column autoResizable="true" width="5rem">
+                        <Label text="{i18n>position}"/>
+                    </Column>
+                    <Column autoResizable="true" width="10rem">
+                        <Label text="{i18n>productName}"/>
+                    </Column>
+                    <Column autoResizable="true" width="5rem">
+                        <Label text="{i18n>quantity}"/>
+                    </Column>
+                    <Column autoResizable="true" width="20rem" hAlign="Initial">
+                        <Label text="{i18n>activities}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text text="{orderView>lineNumber}."/>
+                            <Text text="{orderView>product/name}"/>
+                            <Text text="{orderView>quantity/value} {i18n&gt;quantity.unit}"/>
+                            <Text text="{orderView>activities}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
