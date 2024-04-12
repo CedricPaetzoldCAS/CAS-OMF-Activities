@@ -51,6 +51,13 @@ sap.ui.define([
 
                     oItems.forEach(function (item) {
                         item.activities = [];
+
+                        if(item.fulfillment.cancellation.canceled == true){
+                            item.fulfillment.cancellation.nr = item.quantity.value;
+                        } else{
+                            item.fulfillment.cancellation.nr = 0;
+                        }
+
                         oActivities.forEach(function (activity) {
 
                             activity.items.forEach(function (actitem) {
