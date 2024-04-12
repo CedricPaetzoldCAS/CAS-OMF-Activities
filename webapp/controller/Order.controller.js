@@ -49,15 +49,17 @@ sap.ui.define([
                     oViewModel.setProperty("/Activities", oActivities);
                     console.log(oActivities);
 
+
                     oItems.forEach(function (item) {
                         item.activities = [];
+                        item.fulfillment.return = 0;
 
-                        if(item.fulfillment.cancellation.canceled == true){
+                        if (item.fulfillment.cancellation.canceled == true) {
                             item.fulfillment.cancellation.nr = item.quantity.value;
-                        } else{
+                        } else {
                             item.fulfillment.cancellation.nr = 0;
                         }
-
+                        
                         oActivities.forEach(function (activity) {
 
                             activity.items.forEach(function (actitem) {
@@ -76,7 +78,11 @@ sap.ui.define([
                                         item.activities.push(" " + oResourceBundle.getText("activities.itemChangedDuringProcessing"));
                                     } else if (activity.type == "SAP_ITEMCANCELED_DURING_PROCESSING") {
                                         item.activities.push(" " + oResourceBundle.getText("activities.itemCanceledDuringProcessing"));
+                                    } else if (activity.type == "RETURN") {
+                                        item.activities.push(" " + oResourceBundle.getText("activities.return"));
+                                        item.fulfillment.return++;
                                     };
+
 
                                     let dateTime = activity.occurredAt;
                                     let newDate = dateTime.slice(0, 10);
