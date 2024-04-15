@@ -40,14 +40,14 @@
 						</Toolbar>
 					</headerToolbar>
                 <columns>
-                    <Column autoResizable="true" width="5rem">
+                    <Column autoResizable="true" width="3rem">
                         <Label text="{i18n>position}"/>
-                    </Column>
-                    <Column autoResizable="true" width="10rem">
-                        <Label text="{i18n>productName}"/>
                     </Column>
                     <Column autoResizable="true" width="7rem">
                         <Label text="{i18n>productID}"/>
+                    </Column>
+                    <Column autoResizable="true" width="10rem">
+                        <Label text="{i18n>productName}"/>
                     </Column>
                     <Column autoResizable="true" width="5rem">
                         <Label text="{i18n>quantity}"/>
@@ -66,8 +66,8 @@
                     <ColumnListItem vAlign="Middle">
                         <cells>
                             <Text text="{orderView>lineNumber}."/>
-                            <Text text="{orderView>product/name}"/>
                             <Text text="{orderView>referenceId}"/>
+                            <Text text="{orderView>product/name}"/>
                             <Text text="{orderView>quantity/value} {i18n&gt;quantity.unit}"/>
                             <Text text="{orderView>fulfillment/cancellation/nr}"/>
                             <Text text="{orderView>fulfillment/return}"/>
