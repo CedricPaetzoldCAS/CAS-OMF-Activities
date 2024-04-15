@@ -36,7 +36,7 @@
             <Table id="table0" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="title" header="Smart Table">
                 <headerToolbar>
 						<Toolbar>
-							<Title text="{i18n>activities}" level="H2"/>
+							<Title text="{i18n>items}" level="H2"/>
 						</Toolbar>
 					</headerToolbar>
                 <columns>
@@ -45,6 +45,9 @@
                     </Column>
                     <Column autoResizable="true" width="10rem">
                         <Label text="{i18n>productName}"/>
+                    </Column>
+                    <Column autoResizable="true" width="7rem">
+                        <Label text="{i18n>productID}"/>
                     </Column>
                     <Column autoResizable="true" width="5rem">
                         <Label text="{i18n>quantity}"/>
@@ -64,6 +67,7 @@
                         <cells>
                             <Text text="{orderView>lineNumber}."/>
                             <Text text="{orderView>product/name}"/>
+                            <Text text="{orderView>referenceId}"/>
                             <Text text="{orderView>quantity/value} {i18n&gt;quantity.unit}"/>
                             <Text text="{orderView>fulfillment/cancellation/nr}"/>
                             <Text text="{orderView>fulfillment/return}"/>

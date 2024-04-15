@@ -49,7 +49,6 @@ sap.ui.define([
                     oViewModel.setProperty("/Activities", oActivities);
                     console.log(oActivities);
 
-
                     oItems.forEach(function (item) {
                         item.activities = [];
                         item.fulfillment.return = 0;
@@ -59,7 +58,7 @@ sap.ui.define([
                         } else {
                             item.fulfillment.cancellation.nr = 0;
                         }
-                        
+
                         oActivities.forEach(function (activity) {
 
                             activity.items.forEach(function (actitem) {
@@ -83,7 +82,6 @@ sap.ui.define([
                                         item.fulfillment.return++;
                                     };
 
-
                                     let dateTime = activity.occurredAt;
                                     let newDate = dateTime.slice(0, 10);
                                     let newTime = dateTime.slice(12, 19);
@@ -101,7 +99,6 @@ sap.ui.define([
                 catch (oError) {
                     console.log(oError);
                 }
-
             }
         });
     });
