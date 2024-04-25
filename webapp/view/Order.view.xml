@@ -6,13 +6,6 @@
                 <f:heading>
                     <Title text="{i18n>otitle} {orderView&gt;/orderId}"/>
                 </f:heading>
-                <!--
-                    <f:expandedContent>
-					<Title id="title" text="Orders:"/>
-                    <Button xmlns="sap.m" id="inputButton" text="{i18n>showbutton}" press=".onSubmitOrderId"/>
-                    <Input xmlns="sap.m" id="orderNrInput" value="{orderView>/orderId}" submit=".onSubmitOrderId"/>
-				</f:expandedContent>
-                -->
                 <f:actions>
                     
                 </f:actions>
@@ -33,32 +26,32 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table0" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="title" header="Smart Table">
+            <Table id="table0" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="title">
                 <headerToolbar>
 						<Toolbar>
 							<Title text="{i18n>items}" level="H2"/>
 						</Toolbar>
 					</headerToolbar>
                 <columns>
-                    <Column autoResizable="true" width="3rem">
+                    <Column width="3rem">
                         <Label text="{i18n>position}"/>
                     </Column>
-                    <Column autoResizable="true" width="7rem">
+                    <Column width="7rem">
                         <Label text="{i18n>productID}"/>
                     </Column>
-                    <Column autoResizable="true" width="10rem">
+                    <Column width="10rem">
                         <Label text="{i18n>productName}"/>
                     </Column>
-                    <Column autoResizable="true" width="5rem">
+                    <Column width="5rem">
                         <Label text="{i18n>quantity}"/>
                     </Column>
-                    <Column autoResizable="true" width="5rem">
+                    <Column width="5rem">
                         <Label text="{i18n>canceled}"/>
                     </Column>
-                    <Column autoResizable="true" width="5rem">
+                    <Column width="5rem">
                         <Label text="{i18n>returned}"/>
                     </Column>
-                    <Column autoResizable="true" width="20rem" hAlign="Initial">
+                    <Column width="20rem" hAlign="Initial">
                         <Label text="{i18n>activities}"/>
                     </Column>
                 </columns>
@@ -71,11 +64,16 @@
                             <Text text="{orderView>quantity/value} {i18n&gt;quantity.unit}"/>
                             <Text text="{orderView>fulfillment/cancellation/nr}"/>
                             <Text text="{orderView>fulfillment/return}"/>
+                            <Button
+			                    text="{i18n>activities}"
+			                    width="10rem"
+			                    press=".handlePopoverPress"
+			                    class="sapUiSmallMarginBottom"
+			                    ariaHasPopup="Dialog" />
                             <Text text="{orderView>activities}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
-
             </Table>
         </f:content>
     </f:DynamicPage>

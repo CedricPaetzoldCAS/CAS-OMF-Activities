@@ -1,21 +1,24 @@
+
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {sap/ui/model/json/JSONModel} JSONModel
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
-
         return Controller.extend("de.cas.omfactivities.controller.Order", {
-            onInit: function () {
-                const oViewModel = new JSONModel({
-                    orderId: "42",
-                });
-                this.getView().setModel(oViewModel, "orderView");
 
+            onInit: function () {
+                let oViewModel = new JSONModel({
+                    orderId: "42",
+                    Items: {},
+                });
+                this.getView()
+                    .setModel(oViewModel, "orderView");
             },
 
             onSubmitOrderId: async function (oEvent) {
@@ -29,7 +32,6 @@ sap.ui.define([
                     await oRequestModel.loadData(`/api/v2/orders`, { displayId: sOrderId });
                     const oOrder = oRequestModel.getData()[0];
                     oViewModel.setProperty("/Order", oOrder);
-                    console.log(oOrder);
 
                     let createdTime = oOrder.metadata.createdAt;
                     let cnewDate = createdTime.slice(0, 10);
@@ -41,13 +43,11 @@ sap.ui.define([
                     await oRequestModel.loadData(sItemURL);
                     const oItems = oRequestModel.getData();
                     oViewModel.setProperty("/Items", oItems);
-                    console.log(oItems);
 
                     const sActivitiesURL = "/api/v1/orderActivities?orderId=" + oOrder.id;
                     await oRequestModel.loadData(sActivitiesURL);
                     const oActivities = oRequestModel.getData();
                     oViewModel.setProperty("/Activities", oActivities);
-                    console.log(oActivities);
 
                     oItems.forEach(function (item) {
                         item.activities = [];
@@ -93,12 +93,41 @@ sap.ui.define([
                         });
                     });
                     console.log(oItems);
-                    console.log(oViewModel);
                     oViewModel.refresh();
+
                 }
                 catch (oError) {
                     console.log(oError);
                 }
+            },
+
+            handlePopoverPress: function (oEvent) {
+                var oButton = oEvent.getSource(),
+                    oView = this.getView();
+                const oViewModel = this.getView().getModel("orderView");
+                const oItems = oViewModel.getProperty("/Items");
+
+                // create popover
+                if (!this._pPopover) {
+                    this._pPopover = Fragment.load({
+                        id: oView.getId(),
+                        name: "de.cas.omfactivities.view.QuickView",
+                        controller: this
+                    }).then(function (oPopover) {
+                        oView.addDependent(oPopover);
+                        oPopover.bindElement("/ProductCollection/0");
+                        return oPopover;
+                    });
+                }
+                this._pPopover.then(function (oPopover) {
+                    oPopover.openBy(oButton);
+                    console.log(oPopover);
+                    console.log(oButton);
+
+                    
+
+                    console.log(oItems);
+                });
             }
         });
     });

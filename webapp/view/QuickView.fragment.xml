@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Popover
+		
+		title="{i18n>activities}"
+		class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+		placement="Right"
+		initialFocus="email">
+		<content>
+			<Table id="table1" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="Activities">
+                <columns>
+                    <Column width="10rem" hAlign="Initial">
+                        <Label text="{i18n>activities}"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text text="{orderView>activities}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+		</content>
+		
+	</Popover>
+</core:FragmentDefinition>
