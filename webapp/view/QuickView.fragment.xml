@@ -8,6 +8,7 @@
 		placement="Right"
 		initialFocus="email">
 		<content>
+            <Text text="hi{orderView>/orderId}"></Text>
 			<Table id="table1" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="Activities">
                 <columns>
                     <Column width="10rem" hAlign="Initial">

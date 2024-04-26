@@ -4,7 +4,7 @@
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{i18n>otitle} {orderView&gt;/orderId}"/>
+                    <Title text="{i18n>otitle} {orderView>/orderId}"/>
                 </f:heading>
                 <f:actions>
                     
