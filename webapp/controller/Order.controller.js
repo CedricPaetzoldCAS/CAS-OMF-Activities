@@ -93,7 +93,7 @@ sap.ui.define([
                         });
                     });
                     console.log(oItems);
-                    console.log(oViewModel);
+                    //console.log(oViewModel);
                     oViewModel.refresh();
 
                 }
@@ -125,14 +125,12 @@ sap.ui.define([
                     console.log(oPopover);
                     
                     let buttonId = oButton.sId;
-                    let shortButtonId = buttonId.slice(57);
+                    let shortButtonId = buttonId.slice(75);
                     shortButtonId = ++shortButtonId;
 
                     let buttonActivities = oItems.find(item => item.lineNumber == shortButtonId);
-
-                    console.log(buttonActivities);
-                    console.log(shortButtonId);
-                    console.log(oItems);
+                    oViewModel.setProperty("/ButtonActivities", buttonActivities);
+                    
                     console.log(oViewModel);
                 });
             }
