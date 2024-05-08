@@ -122,11 +122,10 @@ sap.ui.define([
                 }
                 this._pPopover.then(function (oPopover) {
                     oPopover.openBy(oButton);
-                    console.log(oPopover);
 
-                    let buttonId = oButton.sId;
-                    let shortButtonId = buttonId.slice(75);
-                    console.log(shortButtonId)
+                    let buttonId = oButton.getBindingContext("orderView").getPath()
+                    let patternForId = /[0-9]/g;
+                    let shortButtonId = buttonId.match(patternForId);
                     shortButtonId = ++shortButtonId;
 
                     let buttonActivities = oItems.find(item => item.lineNumber == shortButtonId);
