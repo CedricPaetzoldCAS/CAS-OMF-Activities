@@ -6,6 +6,9 @@
 		class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
 		placement="Right"
 		initialFocus="email">
+		<endButton>
+			<Button text="x" press=".onPressClosePopover"></Button>
+		</endButton>
 		<content>
             <Text text="{orderView>/ButtonActivities/activities}"></Text>
 		</content>

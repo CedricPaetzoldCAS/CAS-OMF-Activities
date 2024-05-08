@@ -110,9 +110,9 @@ sap.ui.define([
 
                 // create popover
                 if (!this._pPopover) {
-                    this._pPopover = Fragment.load({
+                    this._pPopover = Fragment.load({    //ist ein promise
                         id: oView.getId(),
-                        name: "de.cas.omfactivities.view.QuickView",
+                        name: "de.cas.omfactivities.view.Popover",
                         controller: this
                     }).then(function (oPopover) {
                         oView.addDependent(oPopover);
@@ -123,9 +123,10 @@ sap.ui.define([
                 this._pPopover.then(function (oPopover) {
                     oPopover.openBy(oButton);
                     console.log(oPopover);
-                    
+
                     let buttonId = oButton.sId;
                     let shortButtonId = buttonId.slice(75);
+                    console.log(shortButtonId)
                     shortButtonId = ++shortButtonId;
 
                     let buttonActivities = oItems.find(item => item.lineNumber == shortButtonId);
@@ -133,6 +134,13 @@ sap.ui.define([
                     
                     console.log(oViewModel);
                 });
+            },
+
+            //closes the popover 
+            onPressClosePopover: function (oEvent) {
+                this._pPopover.then(function (oPopover){
+                    oPopover.close();
+                });     //versuchen    dan async & await
             }
         });
     });
