@@ -102,26 +102,21 @@ sap.ui.define([
                 }
             },
 
-            handlePopoverPress: function (oEvent) {
-                var oButton = oEvent.getSource(),
-                    oView = this.getView();
+            handlePopoverPress: async function (oEvent) {
+                var oButton = oEvent.getSource();
+                var oView = this.getView();
                 const oViewModel = this.getView().getModel("orderView");
                 const oItems = oViewModel.getProperty("/Items");
 
-                // create popover
-                if (!this._pPopover) {
-                    this._pPopover = Fragment.load({    //ist ein promise
+                // creates popover
+                if (!this._oPopover) {
+                    this._oPopover = await Fragment.load({    //ist ein promise
                         id: oView.getId(),
                         name: "de.cas.omfactivities.view.Popover",
-                        controller: this
-                    }).then(function (oPopover) {
-                        oView.addDependent(oPopover);
-                        oPopover.bindElement("/ProductCollection/0");
-                        return oPopover;
-                    });
-                }
-                this._pPopover.then(function (oPopover) {
-                    oPopover.openBy(oButton);
+                        controller: this });
+                    oView.addDependent(this._oPopover);
+                }   //opens Popover
+                    this._oPopover.openBy(oButton);
 
                     let buttonId = oButton.getBindingContext("orderView").getPath()
                     let patternForId = /[0-9]/g;
@@ -132,14 +127,11 @@ sap.ui.define([
                     oViewModel.setProperty("/ButtonActivities", buttonActivities);
                     
                     console.log(oViewModel);
-                });
             },
 
             //closes the popover 
             onPressClosePopover: function (oEvent) {
-                this._pPopover.then(function (oPopover){
-                    oPopover.close();
-                });     //versuchen    dan async & await
+                this._oPopover.close();
             }
         });
     });
