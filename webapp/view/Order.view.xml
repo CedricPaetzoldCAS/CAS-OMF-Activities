@@ -52,7 +52,7 @@
                         <Label text="{i18n>returned}"/>
                     </Column>
                     <Column width="20rem" hAlign="Initial">
-                        <Label text="{i18n>activities}"/>
+                        <Label text=""/>
                     </Column>
                 </columns>
                 <items>

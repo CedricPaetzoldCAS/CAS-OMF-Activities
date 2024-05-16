@@ -48,45 +48,80 @@ sap.ui.define([
                     await oRequestModel.loadData(sActivitiesURL);
                     const oActivities = oRequestModel.getData();
                     oViewModel.setProperty("/Activities", oActivities);
+                    console.log(oActivities);
 
                     oItems.forEach(function (item) {
                         item.activities = [];
                         item.fulfillment.return = 0;
 
+                        //checks how many are cancelled
                         if (item.fulfillment.cancellation.canceled == true) {
                             item.fulfillment.cancellation.nr = item.quantity.value;
                         } else {
                             item.fulfillment.cancellation.nr = 0;
                         }
 
+                        //gets activities
                         oActivities.forEach(function (activity) {
 
                             activity.items.forEach(function (actitem) {
 
                                 if (actitem.id == item.id) {
+                                    const oActivity = {
+                                        activity: "",
+                                        date: ""
+                                    };
 
                                     if (activity.type == "SAP_ORDERCREATED") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.orderCreated"));
+                                        oActivity.activity = oResourceBundle.getText("activities.orderCreated");
+                                        oActivity.icon = "sap-icon://add-product";
                                     } else if (activity.type == "SAP_FULFILLMENTREQUESTCREATED") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.fulfillmentrequestCreated"));
+                                        oActivity.activity = oResourceBundle.getText("activities.fulfillmentrequestCreated");
+                                        oActivity.Icon = "sap-icon://add-activity-2";
                                     } else if (activity.type == "SAP_DELIVERED") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.delivered"));
+                                        oActivity.activity = oResourceBundle.getText("activities.delivered");
+                                        oActivity.icon = "sap-icon://shipping-status";
                                     } else if (activity.type == "SAP_ITEMFULLYDELIVERED") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.itemFullyDelivered"));
+                                        oActivity.activity = oResourceBundle.getText("activities.itemFullyDelivered");
+                                        oActivity.icon = "sap-icon://accept";
                                     } else if (activity.type == "SAP_ITEMCHANGED_DURING_PROCESSING") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.itemChangedDuringProcessing"));
+                                        oActivity.activity = oResourceBundle.getText("activities.itemChangedDuringProcessing");
+                                        oActivity.icon = "sap-icon://edit";
                                     } else if (activity.type == "SAP_ITEMCANCELED_DURING_PROCESSING") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.itemCanceledDuringProcessing"));
+                                        oActivity.activity = oResourceBundle.getText("activities.itemCanceledDuringProcessing");
+                                        oActivity.icon = "sap-icon://decline";
                                     } else if (activity.type == "RETURN") {
-                                        item.activities.push(" " + oResourceBundle.getText("activities.return"));
+                                        oActivity.activity = oResourceBundle.getText("activities.return");
+                                        oActivity.icon = "sap-icon://redo";
                                         item.fulfillment.return++;
                                     };
 
                                     let dateTime = activity.occurredAt;
-                                    let newDate = dateTime.slice(0, 10);
-                                    let newTime = dateTime.slice(12, 19);
-                                    let newDateTime = " " + newDate + " " + newTime + " \n";
-                                    item.activities.push(newDateTime);
+
+                                    // Extrahieren des Datums mit Regex
+                                    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})T/;
+                                    const dateMatch = dateTime.match(dateRegex);
+
+                                    if (dateMatch) {
+                                        let year = dateMatch[1];
+                                        let month = dateMatch[2];
+                                        let day = dateMatch[3];
+
+                                        // Extrahieren der Uhrzeit
+                                        const timeRegex = /T(\d{2}:\d{2}:\d{2})/;
+                                        const timeMatch = dateTime.match(timeRegex);
+
+                                        if (timeMatch) {
+                                            let newTime = timeMatch[1]; // Extrahierte Uhrzeit
+                                            let newDateTime = day + "." + month + "." + year + " " + newTime;
+                                            oActivity.date = newDateTime;
+                                            item.activities.push(oActivity);
+                                        } else {
+                                            console.log("No time found in dateTime string");
+                                        }
+                                    } else {
+                                        console.log("No date found in dateTime string");
+                                    }
 
                                 };
                             });
@@ -113,25 +148,27 @@ sap.ui.define([
                     this._oPopover = await Fragment.load({    //ist ein promise
                         id: oView.getId(),
                         name: "de.cas.omfactivities.view.Popover",
-                        controller: this });
+                        controller: this
+                    });
                     oView.addDependent(this._oPopover);
                 }   //opens Popover
-                    this._oPopover.openBy(oButton);
+                this._oPopover.openBy(oButton);
 
-                    let buttonId = oButton.getBindingContext("orderView").getPath()
-                    let patternForId = /[0-9]/g;
-                    let shortButtonId = buttonId.match(patternForId);
-                    shortButtonId = ++shortButtonId;
+                let buttonId = oButton.getBindingContext("orderView").getPath()
+                let patternForId = /[0-9]/g;
+                let shortButtonId = buttonId.match(patternForId);
+                shortButtonId = ++shortButtonId;
 
-                    let buttonActivities = oItems.find(item => item.lineNumber == shortButtonId);
-                    oViewModel.setProperty("/ButtonActivities", buttonActivities);
-                    
-                    console.log(oViewModel);
+                let buttonActivities = oItems.find(item => item.lineNumber == shortButtonId);
+                oViewModel.setProperty("/ButtonActivities", buttonActivities);
+
             },
 
             //closes the popover 
             onPressClosePopover: function (oEvent) {
                 this._oPopover.close();
             }
+
         });
+
     });

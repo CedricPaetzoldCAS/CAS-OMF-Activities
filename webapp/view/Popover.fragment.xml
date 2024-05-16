@@ -1,5 +1,6 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
+	xmlns:commons="sap.suite.ui.commons"
 	xmlns:core="sap.ui.core">
 	<Popover
 		title="{i18n>activities}"
@@ -7,10 +8,28 @@
 		placement="Right"
 		initialFocus="email">
 		<endButton>
-			<Button text="x" press=".onPressClosePopover"></Button>
+			<Button icon="sap-icon://decline" press=".onPressClosePopover"></Button>
 		</endButton>
 		<content>
-            <Text text="{orderView>/ButtonActivities/activities}"></Text>
+            <commons:Timeline
+			id="idTimeline"
+			enableDoubleSided="false"
+			showHeaderBar="true"
+			showTimeFilter="false"
+			sort="true"
+			sortOldestFirst="false"
+			growingThreshold="0"
+			noDataText="There is no data"
+			filterTitle="{i18n>activities}"			
+			content="{orderView>/ButtonActivities/activities}">
+				<commons:TimelineItem
+						id="idTimelineItem"
+						dateTime="{orderView>date}"
+						title="{orderView>activity}"
+						filterValue="{orderView>activity}"
+						icon="{orderView>icon}">
+				</commons:TimelineItem>
+			</commons:Timeline>
 		</content>
 	</Popover>
 </core:FragmentDefinition>
