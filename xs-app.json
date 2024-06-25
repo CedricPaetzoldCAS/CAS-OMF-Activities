@@ -3,6 +3,20 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "^/api/v2/(.*)$",
+      "target": "/api/v2/$1",
+      "destination": "OMF",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/api/v1/(.*)$",
+      "target": "/api/v1/$1",
+      "destination": "OMF",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
       "source": "^/resources/(.*)$",
       "target": "/resources/$1",
       "authenticationType": "none",

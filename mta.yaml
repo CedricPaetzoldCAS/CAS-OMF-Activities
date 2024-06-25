@@ -47,23 +47,9 @@ modules:
       - decasomfactivities.zip
       name: decasomfactivities
       target-path: resources/
-    - artifacts:
-      - refferenceapp.zip
-      name: refferenceapp
-      target-path: resources/
 - name: decasomfactivities
   type: html5
   path: .
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-- name: refferenceapp
-  type: html5
-  path: refferenceapp
   build-parameters:
     build-result: dist
     builder: custom

@@ -1,76 +1,117 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:c="sap.ui.core" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:layout="sap.ui.layout" controllerName="de.cas.omfactivities.controller.Order" displayBlock="true">
-    <SearchField xmlns="sap.m" placeholder="Search for ..." id="field0" value="{orderView>/orderId}" search=".onSubmitOrderId"/>
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    controllerName="de.cas.omfactivities.controller.Order"
+    displayBlock="true"
+>
+    <SearchField
+        xmlns="sap.m"
+        placeholder="{i18n>search}"
+        id="field0"
+        value="{orderView>/orderId}"
+        search=".onSubmitOrderId"
+    />
     <f:DynamicPage id="page">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="{i18n>otitle} {orderView>/orderId}"/>
+                    <Title text="{i18n>title} {orderView>/orderId}" />
                 </f:heading>
-                <f:actions>
-                    
-                </f:actions>
+                <f:actions />
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
-            <f:DynamicPageHeader id="dpHeader" pinnable="true">
+            <f:DynamicPageHeader
+                id="dpHeader"
+                pinnable="true"
+            >
                 <layout:HorizontalLayout allowWrapping="true">
-						<layout:VerticalLayout class="sapUiMediumMarginEnd">
-							<ObjectAttribute title="{i18n>customer}" text="{orderView>/Order/customer/person/name}"/>
-							<ObjectAttribute title="{i18n>status}" text="{orderView>/Order/status}"/>
-						</layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute
+                            title="{i18n>customer}"
+                            text="{orderView>/Order/customer/person/name}"
+                        />
+                        <ObjectAttribute
+                            title="{i18n>status}"
+                            text="{orderView>/Order/status}"
+                        />
+                    </layout:VerticalLayout>
 
-						<layout:VerticalLayout>
-							<ObjectAttribute title="{i18n>createdAt}" text="{orderView>/Order/metadata/createdAt}"/>
-						</layout:VerticalLayout>
-					</layout:HorizontalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute
+                            title="{i18n>createdAt}"
+                            text="{orderView>/Order/metadata/createdAt}"
+                        />
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="table0" sticky="HeaderToolbar,ColumnHeaders" items="{orderView>/Items}" ariaLabelledBy="title">
+            <Table
+                id="table0"
+                sticky="HeaderToolbar,ColumnHeaders"
+                items="{orderView>/Items}"
+                ariaLabelledBy="title"
+            >
                 <headerToolbar>
-						<Toolbar>
-							<Title text="{i18n>items}" level="H2"/>
-						</Toolbar>
-					</headerToolbar>
+                    <Toolbar>
+                        <Title
+                            text="{i18n>items}"
+                            level="H2"
+                        />
+                    </Toolbar>
+                </headerToolbar>
                 <columns>
-                    <Column width="3rem">
-                        <Label text="{i18n>position}"/>
+                    <Column width="3%">
+                        <Label text="{i18n>position}" />
                     </Column>
-                    <Column width="7rem">
-                        <Label text="{i18n>productID}"/>
+                    <Column width="7%">
+                        <Label text="{i18n>productID}" />
                     </Column>
-                    <Column width="10rem">
-                        <Label text="{i18n>productName}"/>
+                    <Column width="15%">
+                        <Label text="{i18n>productName}" />
                     </Column>
-                    <Column width="5rem">
-                        <Label text="{i18n>quantity}"/>
+                    <Column width="5%">
+                        <Label text="{i18n>quantity}" />
                     </Column>
-                    <Column width="5rem">
-                        <Label text="{i18n>canceled}"/>
+                    <Column width="5%">
+                        <Label text="{i18n>canceled}" />
                     </Column>
-                    <Column width="5rem">
-                        <Label text="{i18n>returned}"/>
+                    <Column width="5%">
+                        <Label text="{i18n>returned}" />
                     </Column>
-                    <Column width="20rem" hAlign="Initial">
-                        <Label text=""/>
+                    <Column
+                        width="10%"
+                        hAlign="Initial"
+                    >
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem vAlign="Middle">
                         <cells>
-                            <Text text="{orderView>lineNumber}."/>
-                            <Text text="{orderView>referenceId}"/>
-                            <Text text="{orderView>product/name}"/>
-                            <Text text="{orderView>quantity/value} {i18n&gt;quantity.unit}"/>
-                            <Text text="{orderView>fulfillment/cancellation/nr}"/>
-                            <Text text="{orderView>fulfillment/return}"/>
+                            <Text text="{orderView>lineNumber}." />
+                            <Text text="{orderView>referenceId}" />
+                            <Text text="{orderView>product/name}" />
+                            <Text
+                                text="{orderView>quantity/value} {i18n&gt;quantity.unit}"
+                            />
+                            <Text
+                                text="{orderView>fulfillment/cancellation/nr}"
+                            />
+                            <Text text="{orderView>fulfillment/return}" />
                             <Button
-			                    text="{i18n>activities}"
-			                    width="10rem"
-			                    press=".handlePopoverPress"
-			                    class="sapUiSmallMarginBottom"
-			                    ariaHasPopup="Dialog" />
-                            <Text text="{orderView>activities}"/>
+                                text="{i18n>activities}"
+                                width="10rem"
+                                press=".handlePopoverPress"
+                                class="sapUiSmallMarginBottom"
+                                ariaHasPopup="Dialog"
+                            />
+                            <Text text="{orderView>activities}" />
                         </cells>
                     </ColumnListItem>
                 </items>

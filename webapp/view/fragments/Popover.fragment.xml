@@ -5,7 +5,7 @@
 	<Popover
 		title="{i18n>activities}"
 		class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
-		placement="Right"
+		placement="Auto"
 		initialFocus="email">
 		<endButton>
 			<Button icon="sap-icon://decline" press=".onPressClosePopover"></Button>
@@ -16,7 +16,7 @@
 			enableDoubleSided="false"
 			showHeaderBar="true"
 			showTimeFilter="false"
-			sort="true"
+			sort="false"
 			sortOldestFirst="false"
 			growingThreshold="0"
 			noDataText="There is no data"

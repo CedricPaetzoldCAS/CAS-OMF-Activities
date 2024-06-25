@@ -14,7 +14,7 @@ sap.ui.define([
 
             onInit: function () {
                 let oViewModel = new JSONModel({
-                    orderId: "42",
+                    orderId: "",
                     Items: {},
                 });
                 this.getView()
@@ -98,7 +98,6 @@ sap.ui.define([
 
                                     let dateTime = activity.occurredAt;
 
-                                    // Extrahieren des Datums mit Regex
                                     const dateRegex = /^(\d{4})-(\d{2})-(\d{2})T/;
                                     const dateMatch = dateTime.match(dateRegex);
 
@@ -107,20 +106,19 @@ sap.ui.define([
                                         let month = dateMatch[2];
                                         let day = dateMatch[3];
 
-                                        // Extrahieren der Uhrzeit
                                         const timeRegex = /T(\d{2}:\d{2}:\d{2})/;
                                         const timeMatch = dateTime.match(timeRegex);
 
                                         if (timeMatch) {
-                                            let newTime = timeMatch[1]; // Extrahierte Uhrzeit
+                                            let newTime = timeMatch[1];
                                             let newDateTime = day + "." + month + "." + year + " " + newTime;
                                             oActivity.date = newDateTime;
                                             item.activities.push(oActivity);
                                         } else {
-                                            console.log("No time found in dateTime string");
+                                            console.log("i18n>activities.timeError");
                                         }
                                     } else {
-                                        console.log("No date found in dateTime string");
+                                        console.log("i18n>activities.dateError");
                                     }
 
                                 };
@@ -145,9 +143,9 @@ sap.ui.define([
 
                 // creates popover
                 if (!this._oPopover) {
-                    this._oPopover = await Fragment.load({    //ist ein promise
+                    this._oPopover = await Fragment.load({
                         id: oView.getId(),
-                        name: "de.cas.omfactivities.view.Popover",
+                        name: "de.cas.omfactivities.view.fragments.Popover",
                         controller: this
                     });
                     oView.addDependent(this._oPopover);
@@ -168,6 +166,9 @@ sap.ui.define([
             onPressClosePopover: function (oEvent) {
                 this._oPopover.close();
             }
+
+
+            
 
         });
 
