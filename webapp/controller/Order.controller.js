@@ -1,6 +1,6 @@
 
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment"
 ],
@@ -8,9 +8,9 @@ sap.ui.define([
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {sap/ui/model/json/JSONModel} JSONModel
      */
-    function (Controller, JSONModel, Fragment) {
+    function (BaseController, JSONModel, Fragment) {
         "use strict";
-        return Controller.extend("de.cas.omfactivities.controller.Order", {
+        return BaseController.extend("de.cas.omfactivities.controller.Order", {
 
             onInit: function () {
                 let oViewModel = new JSONModel({
@@ -27,9 +27,10 @@ sap.ui.define([
                 const oViewModel = this.getView().getModel("orderView");
                 const sOrderId = oViewModel.getProperty("/orderId");
                 const oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                const sAppModulePath = this.getAppModulePath();
 
                 try {
-                    await oRequestModel.loadData(`/api/v2/orders`, { displayId: sOrderId });
+                    await oRequestModel.loadData(sAppModulePath + `/api/v2/orders`, { displayId: sOrderId });
                     const oOrder = oRequestModel.getData()[0];
                     oViewModel.setProperty("/Order", oOrder);
 
@@ -39,12 +40,12 @@ sap.ui.define([
                     let newcreatedTime = " " + cnewDate + " " + cnewTime;
                     oViewModel.setProperty("/Order/metadata/createdAt", newcreatedTime);
 
-                    const sItemURL = "/api/v2/orders/" + oOrder.id + "/items";
+                    const sItemURL = sAppModulePath + "/api/v2/orders/" + oOrder.id + "/items";
                     await oRequestModel.loadData(sItemURL);
                     const oItems = oRequestModel.getData();
                     oViewModel.setProperty("/Items", oItems);
 
-                    const sActivitiesURL = "/api/v1/orderActivities?orderId=" + oOrder.id;
+                    const sActivitiesURL = sAppModulePath + "/api/v1/orderActivities?orderId=" + oOrder.id;
                     await oRequestModel.loadData(sActivitiesURL);
                     const oActivities = oRequestModel.getData();
                     oViewModel.setProperty("/Activities", oActivities);
